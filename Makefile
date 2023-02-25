@@ -19,8 +19,8 @@ debug: $(EXE)
 $(EXE): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(EXE)
 
-singleended_rpi.o: singleended_rpi.cpp $(ADSLIB)/Adafruit_ADS1015.cpp $(ADSLIB)/Adafruit_ADS1015.h
-	$(CC) $(CFLAGS) -c singleended_rpi.cpp $(ADSLIB)/Adafruit_ADS1015.cpp -I $(ADSLIB)
+singleended_rpi.o: singleended_rpi.cpp $(ADSLIB)Adafruit_ADS1015.cpp $(ADSLIB)Adafruit_ADS1015.h
+	$(CC) $(CFLAGS) -c singleended_rpi.cpp $(ADSLIB)Adafruit_ADS1015.cpp -I $(ADSLIB)
 
 clean:
 	rm -f $(OBJS)

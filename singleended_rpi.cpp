@@ -16,7 +16,7 @@ int main()
     while (true)
     {
         adc0 = ads.readADC_SingleEnded(0);
-        sadc0 = stastic_cast<int>(adc0);
+        sadc0 = static_cast<int>(adc0);
         adc1 = ads.readADC_SingleEnded(1);
         adc2 = ads.readADC_SingleEnded(2);
         adc3 = ads.readADC_SingleEnded(3);
