@@ -1,0 +1,2 @@
+# Photodiode Code
+A repository to hold all code related to reading data from the photodiode array part of the Balloon Borne Solar Telescope. This data is being read from an [Adafruit ADS1015 12-bit ADC](https://www.adafruit.com/product/1083).
