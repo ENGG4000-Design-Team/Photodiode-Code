@@ -15,12 +15,14 @@ int main()
 
     ads.setGain(GAIN_ONE);
 
-    if (!ads.begin())
+    /*if (!ads.begin())
     {
         std::cout << "Failed to initialize ADS." << std::endl;
         while (1)
             ;
-    }
+    }*/
+
+    ads.begin()
 
     while (true)
     {
@@ -30,16 +32,16 @@ int main()
         adc2 = ads.readADC_SingleEnded(2);
         adc3 = ads.readADC_SingleEnded(3);
 
-        volts0 = ads.computeVolts(adc0);
-        volts1 = ads.computeVolts(adc1);
-        volts2 = ads.computeVolts(adc2);
-        volts3 = ads.computeVolts(adc3);
+        //volts0 = ads.computeVolts(adc0);
+        //volts1 = ads.computeVolts(adc1);
+        //volts2 = ads.computeVolts(adc2);
+        //volts3 = ads.computeVolts(adc3);
 
         std::cout << "-----------------------------------------------------------" << std::endl;
-        std::cout << "AIN0: " << adc0 << "  " << volts0 << "V" << std::endl;
-        std::cout << "AIN1: " << adc1 << "  " << volts1 << "V" << std::endl;
-        std::cout << "AIN2: " << adc2 << "  " << volts2 << "V" << std::endl;
-        std::cout << "AIN3: " << adc3 << "  " << volts3 << "V" << std::endl;
+        std::cout << "AIN0: " << adc0 << std::endl; //"  " << volts0 << "V" << std::endl;
+        std::cout << "AIN1: " << adc1 << std::endl; //"  " << volts1 << "V" << std::endl;
+        std::cout << "AIN2: " << adc2 << std::endl; //"  " << volts2 << "V" << std::endl;
+        std::cout << "AIN3: " << adc3 << std::endl; //"  " << volts3 << "V" << std::endl;
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
