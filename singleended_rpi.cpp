@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include <thread>
 
 #include "Adafruit_ADS1015.h"
 
