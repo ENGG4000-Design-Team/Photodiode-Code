@@ -14,8 +14,11 @@ release: $(EXE)
 debug: CFLAGS = $(BASEFLAGS) $(DEBUG_FLAGS)
 debug: $(EXE)
 
-$(EXE): $@.cpp $(ADSLIB)Adafruit_ADS1015.cpp $(ADSLIB)Adafruit_ADS1015.h
-	$(CC) $(CFLAGS) -o $@ $@.cpp $(ADSLIB)Adafruit_ADS1015.cpp -I $(ADSLIB) $(LIBS)
+photodiode_reader: photodiode_reader.cpp $(ADSLIB)Adafruit_ADS1015.cpp $(ADSLIB)Adafruit_ADS1015.h
+	$(CC) $(CFLAGS) -o $@ photodiode_reader.cpp $(ADSLIB)Adafruit_ADS1015.cpp -I $(ADSLIB) $(LIBS)
+
+singleended_test: singleended_test.cpp $(ADSLIB)Adafruit_ADS1015.cpp $(ADSLIB)Adafruit_ADS1015.h
+	$(CC) $(CFLAGS) -o $@ singleended_test.cpp $(ADSLIB)Adafruit_ADS1015.cpp -I $(ADSLIB) $(LIBS)
 
 clean:
 	rm -f $(EXE)
