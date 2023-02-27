@@ -5,6 +5,7 @@
 #include <iostream>
 #include <iomanip>
 #include <map>
+#include <vector>
 #include <chrono>
 #include <thread>
 
@@ -18,7 +19,11 @@ int pins[4] = {1, 2, 3, 4};
 
 // Map the multiplexer channel bits to the corresponding
 // index on the photodiodes array below.
-std::map<uint8_t, int[2]> photodiodeIdx;
+std::map<uint8_t, std::vector<int>> photodiodeIdx{
+    {0x00, {0, 2}}, // 0b0000 corresponds to photodiode D1
+    {0x01, {4, 4}}, // 0b0001 corresponds to photodiode D4
+    {0x02, {2, 4}}, // 0b0010 corresponds to photodiode D3
+};
 
 // Store photodiode readings in this array such that their
 // index mimics their physical position on the photodiode board.
