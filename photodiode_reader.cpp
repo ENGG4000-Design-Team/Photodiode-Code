@@ -88,7 +88,7 @@ int main()
             // Write key to GPIO pins to select particular photodiode
             for (int i = 0; i < 4; i++)
             {
-                digitalWrite(pin[i], (key >> i) & 0x01)
+                digitalWrite(pins[i], (key >> i) & 0x01)
             }
 
             // TODO: Is this needed?
