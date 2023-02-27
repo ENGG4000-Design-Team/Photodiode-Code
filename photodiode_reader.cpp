@@ -21,8 +21,13 @@ int pins[4] = {1, 2, 3, 4};
 // index on the photodiodes array below.
 std::map<uint8_t, std::vector<int>> photodiodeIdx{
     {0x00, {0, 2}}, // 0b0000 corresponds to photodiode D1
-    {0x01, {4, 4}}, // 0b0001 corresponds to photodiode D4
+    {0x01, {0, 4}}, // 0b0001 corresponds to photodiode D2
     {0x02, {2, 4}}, // 0b0010 corresponds to photodiode D3
+    {0x03, {4, 4}}, // 0b0011 corresponds to photodiode D4
+    {0x04, {4, 2}}, // 0b0100 corresponds to photodiode D5
+    {0x05, {4, 0}}, // 0b0101 corresponds to photodiode D6
+    {0x0A, {2, 0}}, // 0b1010 corresponds to photodiode D7
+    {0x0B, {0, 0}}, // 0b1011 corresponds to photodiode D8
 };
 
 // Store photodiode readings in this array such that their
@@ -44,13 +49,6 @@ uint16_t photodiodes[5][5] = {
     {0x0000, 0x0000, 0x0000, 0x0000, 0x0000},
     {0x0000, 0x0000, 0x0000, 0x0000, 0x0000}};
 
-void initPhotodiodeIdxMap()
-{
-    photodiodeIdx[0x00] = {0, 2}; // 0b0000 corresponds to photodiode D1
-    photodiodeIdx[0x01] = {4, 4}; // 0b0001 corresponds to photodiode D4
-    photodiodeIdx[0x02] = {2, 4}; // 0b0010 corresponds to photodiode D3
-}
-
 void printMat()
 {
     std::cout << std::showbase
@@ -69,8 +67,6 @@ void printMat()
 
 int main()
 {
-    uint16_t adc0, adc1;
-
     // Setup wiringPi
     wiringPiSetup();
     for (const auto &pin : pins)
@@ -78,6 +74,7 @@ int main()
         pinMode(pin, OUTPUT);
     }
 
+    // Setup ADC
     ads.setGain(GAIN_ONE);
     ads.begin();
 
