@@ -55,13 +55,15 @@ void printMat()
               << std::internal
               << std::setfill('0');
 
+            std::cout << "-----------------------------------------------------------" << std::endl;
+
     for (const auto &row : photodiodes)
     {
         for (const auto &col : row)
         {
             std::cout << std::hex << std::setw(6) << col << " ";
         }
-        std::cout << std::endl;
+        std::cout << std::endl << std::endl;
     }
 }
 
