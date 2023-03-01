@@ -3,6 +3,7 @@
  * Author: Ethan garnier
  */
 #include <iostream>
+#include <algorithm>
 #include <iomanip>
 #include <map>
 #include <vector>
@@ -13,6 +14,9 @@
 #include "wiringPi.h"
 
 Adafruit_ADS1015 ads;
+
+const int PHOTODIODE_ARRAY_X = 5;
+const int PHOTODIODE_ARRAY_Y = 5;
 
 // GPIO pins we are using to control multiplexer channels
 int pins[4] = {1, 2, 3, 4};
@@ -42,20 +46,21 @@ std::map<uint8_t, std::vector<int>> photodiodeIdx{
 //      D7 => photodiodes[2][0]
 //      D8 => photodiodes[0][0]
 // All other values in between are zeros and disgarded in processing.
-uint16_t photodiodes[5][5] = {
+uint16_t photodiodes[PHOTODIODE_ARRAY_Y][PHOTODIODE_ARRAY_X] = {
     {0x0000, 0x0000, 0x0000, 0x0000, 0x0000},
     {0x0000, 0x0000, 0x0000, 0x0000, 0x0000},
     {0x0000, 0x0000, 0x0000, 0x0000, 0x0000},
     {0x0000, 0x0000, 0x0000, 0x0000, 0x0000},
     {0x0000, 0x0000, 0x0000, 0x0000, 0x0000}};
 
+// Print the photodiode matrix nicely
 void printMat()
 {
     std::cout << std::showbase
               << std::internal
               << std::setfill('0');
 
-            std::cout << "-----------------------------------------------------------" << std::endl;
+    std::cout << "-----------------------------------------------------------" << std::endl;
 
     for (const auto &row : photodiodes)
     {
@@ -63,7 +68,24 @@ void printMat()
         {
             std::cout << std::hex << std::setw(6) << col << " ";
         }
-        std::cout << std::endl << std::endl;
+        std::cout << std::endl
+                  << std::endl;
+    }
+}
+
+// Find the maximum value in the photodiode matrix, as well
+// as its position in the matrix.
+void findMax(uint16_t &maxVal, std::vector<int> &maxPos)
+{
+    for (int i = 0; i < PHOTODIODE_ARRAY_Y; i++)
+    {
+        auto rowMax = std::max_element(photodiodes[i], photodiodes[i] + PHOTODIODE_ARRAY_X);
+        if (*rowMax > maxVal)
+        {
+            maxPos[0] = i;
+            maxPos[1] = std::distance(photodiodes[i], rowMax);
+            maxVal = *rowMax;
+        }
     }
 }
 
@@ -79,6 +101,9 @@ int main()
     // Setup ADC
     ads.setGain(GAIN_ONE);
     ads.begin();
+
+    std::vector<int> maxPos{0, 0};
+    uint16_t maxVal = 0x0000;
 
     while (true)
     {
@@ -100,7 +125,50 @@ int main()
             photodiodes[val[0]][val[1]] = ads.readADC_SingleEnded(0);
         }
 
-        printMat();
+        // printMat();
+
+        std::cout << "Brightest Photodiode: ";
+
+        findMax(maxVal, maxPos);
+        if (maxPos == photodiodeIdx.at(0x00))
+        {
+            std::cout << "D1";
+        }
+        else if (maxPos == photodiodeIdx.at(0x01))
+        {
+            std::cout << "D2";
+        }
+        else if (maxPos == photodiodeIdx.at(0x02))
+        {
+            std::cout << "D3";
+        }
+        else if (maxPos == photodiodeIdx.at(0x03))
+        {
+            std::cout << "D4";
+        }
+        else if (maxPos == photodiodeIdx.at(0x04))
+        {
+            std::cout << "D5";
+        }
+        else if (maxPos == photodiodeIdx.at(0x05))
+        {
+            std::cout << "D6";
+        }
+        else if (maxPos == photodiodeIdx.at(0x0A))
+        {
+            std::cout << "D7";
+        }
+        else if (maxPos == photodiodeIdx.at(0x0B))
+        {
+            std::cout << "D8";
+        }
+        else
+        {
+            std::cout << "NONE";
+        }
+
+        std::cout << std::endl;
+
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
