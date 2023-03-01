@@ -77,6 +77,7 @@ void printMat()
 // as its position in the matrix.
 void findMax(uint16_t &maxVal, std::vector<int> &maxPos)
 {
+    maxVal = 0x0000;
     for (int i = 0; i < PHOTODIODE_ARRAY_Y; i++)
     {
         auto rowMax = std::max_element(photodiodes[i], photodiodes[i] + PHOTODIODE_ARRAY_X);
