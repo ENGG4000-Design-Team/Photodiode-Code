@@ -103,8 +103,8 @@ void calcVectToCenter(std::vector<int>& vect)
     findMax(maxVal, maxPos);
 
     // Multiply by -1 so up is positive and down is negative.
-    unitVect[0] = -1 * (maxPos[0] - ceil(PHOTODIODE_ARRAY_Y / 2));
-    unitVect[1] = maxPos[1] - ceil(PHOTODIODE_ARRAY_X / 2);
+    vect[0] = -1 * (maxPos[0] - ceil(PHOTODIODE_ARRAY_Y / 2));
+    vect[1] = maxPos[1] - ceil(PHOTODIODE_ARRAY_X / 2);
 
 }
 
