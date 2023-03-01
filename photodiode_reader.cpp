@@ -90,6 +90,24 @@ void findMax(uint16_t &maxVal, std::vector<int> &maxPos)
     }
 }
 
+// Calculate the "unit" vector corresponding to the brightest
+// photodiode towards the center of the photodiode array.
+//
+// TODO: Should we have this calculate the unit vector
+// or just keep it as the index difference between brightest
+// photodiode and the center of the array?
+void calcVectToCenter(std::vector<int>& vect)
+{
+    uint16_t maxVal = 0x0000;
+    std::vector<int> maxPos{0, 0};
+    findMax(maxVal, maxPos);
+
+    // Multiply by -1 so up is positive and down is negative.
+    unitVect[0] = -1 * (maxPos[0] - ceil(PHOTODIODE_ARRAY_Y / 2));
+    unitVect[1] = maxPos[1] - ceil(PHOTODIODE_ARRAY_X / 2);
+
+}
+
 int main()
 {
     // Setup wiringPi
