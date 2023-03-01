@@ -9,6 +9,7 @@
 #include <vector>
 #include <chrono>
 #include <thread>
+#include <cmath>
 
 #include "Adafruit_ADS1015.h"
 #include "wiringPi.h"
