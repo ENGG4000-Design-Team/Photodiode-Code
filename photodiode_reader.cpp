@@ -122,6 +122,7 @@ int main()
     ads.setGain(GAIN_ONE);
     ads.begin();
 
+    std::vector<int> moveVect{0, 0};
     std::vector<int> maxPos{0, 0};
     uint16_t maxVal = 0x0000;
 
@@ -187,7 +188,8 @@ int main()
             std::cout << "NONE";
         }
 
-        std::cout << std::endl;
+        calcVectToCenter(moveVect);
+        std::cout << "\tVector to center: [" << moveVect[0] << ", " << moveVect[1] << "]" << std::endl; 
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
